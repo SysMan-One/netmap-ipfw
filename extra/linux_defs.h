@@ -19,7 +19,7 @@ typedef struct mtx rwlock_t;
  * some network structure can be defined in the bsd way
  * by using the _FAVOR_BSD definition. This is not true
  * for icmp structure.
- * XXX struct icmp contains bsd names in 
+ * XXX struct icmp contains bsd names in
  * /usr/include/netinet/ip_icmp.h
  */
 #define icmp_code code
@@ -31,14 +31,18 @@ typedef struct mtx rwlock_t;
 #define __u6_addr       __in6_u
 // #define __u6_addr32     u6_addr32
 
+
 /* defined in linux/sctp.h with no bsd definition */
 struct sctphdr {
-        uint16_t src_port;      /* source port */
-        uint16_t dest_port;     /* destination port */
-        uint32_t v_tag;         /* verification tag of packet */
-        uint32_t checksum;      /* Adler32 C-Sum */
-        /* chunks follow... */
-}       SCTP_PACKED;
+	uint16_t src_port;      /* source port */
+	uint16_t dest_port;     /* destination port */
+	uint32_t v_tag;         /* verification tag of packet */
+	uint32_t checksum;      /* Adler32 C-Sum */
+	/* chunks follow... */
+}       /* @RRL: SCTP_PACKED */ ;
+
+
+
 
 /* missing definition */
 #define TH_FIN  0x01
@@ -68,12 +72,12 @@ extern int securelevel;
 
 struct carp_header {
 #if BYTE_ORDER == LITTLE_ENDIAN
-        u_int8_t        carp_type:4,
-                        carp_version:4;
+	u_int8_t        carp_type:4,
+			carp_version:4;
 #endif
 #if BYTE_ORDER == BIG_ENDIAN
-        u_int8_t        carp_version:4,
-                        carp_type:4;
+	u_int8_t        carp_version:4,
+			carp_type:4;
 #endif
 };
 
@@ -93,7 +97,7 @@ struct ifaltq {
 
 struct ifnet {
 	char    if_xname[IFNAMSIZ];     /* external name (name + unit) */
-        struct ifaltq if_snd;          /* output queue (includes altq) */
+	struct ifaltq if_snd;          /* output queue (includes altq) */
 };
 
 /* involves mbufs */
@@ -108,7 +112,7 @@ int in_cksum(struct mbuf *m, int len);
 struct pf_mtag {
 	void            *hdr;           /* saved hdr pos in mbuf, for ECN */
 	sa_family_t      af;            /* for ECN */
-        u_int32_t        qid;           /* queue id */
+	u_int32_t        qid;           /* queue id */
 };
 #endif
 
@@ -126,14 +130,14 @@ struct radix_node {
 
 /* from bsd sys/queue.h */
 #define TAILQ_FOREACH_SAFE(var, head, field, tvar)                      \
-        for ((var) = TAILQ_FIRST((head));                               \
-            (var) && ((tvar) = TAILQ_NEXT((var), field), 1);            \
-            (var) = (tvar))
+	for ((var) = TAILQ_FIRST((head));                               \
+	    (var) && ((tvar) = TAILQ_NEXT((var), field), 1);            \
+	    (var) = (tvar))
 
 #define SLIST_FOREACH_SAFE(var, head, field, tvar)                      \
-        for ((var) = SLIST_FIRST((head));                               \
-            (var) && ((tvar) = SLIST_NEXT((var), field), 1);            \
-            (var) = (tvar))
+	for ((var) = SLIST_FIRST((head));                               \
+	    (var) && ((tvar) = SLIST_NEXT((var), field), 1);            \
+	    (var) = (tvar))
 
 /* depending of linux version */
 #ifndef ETHERTYPE_IPV6
